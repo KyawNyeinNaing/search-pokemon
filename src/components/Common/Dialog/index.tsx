@@ -19,24 +19,22 @@ type Props = {
 };
 
 const Modal = (props: Props) => {
-  console.log(props.pokemonData);
-
   return (
     <Fragment>
       <Dialog size="md" open={props.open} handler={props.handleOpen}>
         <DialogHeader className="justify-between">
-          <Typography variant="h5" color="blue-gray" className="flex items-center justify-start gap-x-[10px]">
+          <div color="blue-gray" className="flex items-center justify-start gap-x-[10px]">
             <div className="overflow-hidden">
               <Image src={props?.pokemonData?.image} width={50} height={50} alt={props?.pokemonData?.name} />
             </div>
             <span>{props?.pokemonData?.name}</span>
-          </Typography>
+          </div>
         </DialogHeader>
         <DialogBody className="overflow-y-scroll pr-2 max-h-[500px]">
           <div className="mb-6 overflow-y-scroll space-y-[10px]">
-            <Typography variant="small" color="gray" className="font-semibold opacity-70">
+            <div color="gray" className="font-semibold opacity-70">
               Evolutions
-            </Typography>
+            </div>
             <div>
               {props?.pokemonData?.evolutions.map((ev: PokemonType, key: number) => (
                 <div key={key}>
@@ -53,13 +51,13 @@ const Modal = (props: Props) => {
                       </div>
                       <div className="flex items-start justify-start gap-x-[10px]">
                         <p className="text-[12px] font-[600] w-[100px]">Types</p>
-                        <p>
+                        <div>
                           {ev?.types?.map((type, i) => (
                             <div key={i}>
                               <p className="text-[12px] font-[400]">- {type}</p>
                             </div>
                           ))}
-                        </p>
+                        </div>
                       </div>
                       <div className="flex items-start justify-start gap-x-[10px]">
                         <p className="text-[12px] font-[600] w-[100px]">Attacks</p>
@@ -78,7 +76,7 @@ const Modal = (props: Props) => {
                           </div>
                           <div className="col-span-6">
                             <p className="text-[12px] font-[600]">Special</p>
-                            <div className='space-y-[10px]'>
+                            <div className="space-y-[10px]">
                               {ev?.attacks?.special?.map((s, i) => (
                                 <div key={i}>
                                   <p className="text-[12px] font-[400]">Name - {s.name}</p>

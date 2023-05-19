@@ -69,7 +69,7 @@ const Pokemon: React.FC<Props> = ({ pokemons }: Props) => {
 
         return (
           <div key={key} className={`${colStart} md:col-span-2`}>
-            <CardStyled typecolor={typeColor[getVal]} onClick={() => handleOpen(pokemon)}>
+            <CardStyled typecolor={typeColor[getVal]} onClick={() => pokemon?.evolutions && handleOpen(pokemon)}>
               <div className="w-full h-[300px]">
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="bg-white absolute top-[5px] right-[15px] px-[5px] py-[2px] rounded-[10px] text-[12px]">

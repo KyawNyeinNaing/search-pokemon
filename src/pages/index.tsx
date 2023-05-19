@@ -1,14 +1,12 @@
 import type { NextPage, GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { gql, useQuery } from '@apollo/client';
 import Pokemon from '@/components/App/Pokemon';
 import { PokemonType } from '@/types/Pokemon';
-import { GET_POKEMON, GET_POKEMONS, usePokemonQuery } from '@/gql/usePokemonQuery';
+import { GET_POKEMONS, usePokemonQuery } from '@/gql/usePokemonQuery';
 import { Image, InputText } from '@/components/Common';
 import { apolloClient } from '@/controller/client';
 import { useEffect, useState } from 'react';
 import { Button } from '@material-tailwind/react';
 import queryString from 'query-string';
-import { NextRouter, useRouter } from 'next/router';
 
 type Props = {
   loading: boolean;
@@ -57,8 +55,6 @@ const Pokemons: NextPage<Props> = (props: Props) => {
     window.history.pushState(null, '', url);
 
   }, [searchData, inputVal]);
-
-  console.log(props.pokemons)
 
   if (props.loading) {
     return (
