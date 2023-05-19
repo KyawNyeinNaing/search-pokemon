@@ -147,10 +147,10 @@ export const GET_POKEMON = gql`
 //   pokemon: PokemonType;
 // };
 
-export function usePokemonQuery(search: string, skip: boolean) {
+export function usePokemonQuery(search: any) {
   return useQuery<PokemonType | any>(GET_POKEMON, {
     variables: { search },
-    skip,
+    // skip,
     fetchPolicy: 'network-only',
   });
 }

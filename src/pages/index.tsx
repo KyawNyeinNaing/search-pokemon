@@ -7,6 +7,7 @@ import { apolloClient } from '@/controller/client';
 import { useEffect, useState } from 'react';
 import { Button } from '@material-tailwind/react';
 import queryString from 'query-string';
+import { useRouter } from 'next/router';
 
 type Props = {
   loading: boolean;
@@ -39,9 +40,11 @@ const Pokemons: NextPage<Props> = (props: Props) => {
   const [inputVal, setInputVal] = useState<string>('');
   const [skip, setSkip] = useState<boolean>(true);
   const [searchList, setSearchList] = useState<PokemonType[]>([]);
+  const router = useRouter();
+  const search = router?.query?.search;
 
   // call PokemonByName API from client side
-  const { data: searchData = null, loading, called, refetch } = usePokemonQuery(inputVal, skip);
+  const { data: searchData = null, loading, called, refetch } = usePokemonQuery(search ? search : inputVal);
 
   useEffect(() => {
     if (searchData) {
@@ -49,12 +52,11 @@ const Pokemons: NextPage<Props> = (props: Props) => {
     }
 
     const param = {
-      search: inputVal,
+      search: search ? search : inputVal,
     };
     const url = `${window.location.pathname}?${queryString.stringify(param)}`;
     window.history.pushState(null, '', url);
-
-  }, [searchData, inputVal]);
+  }, [searchData, inputVal, search]);
 
   if (props.loading) {
     return (
