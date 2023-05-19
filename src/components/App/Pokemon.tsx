@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Typography } from '@material-tailwind/react';
 import { PokemonType } from '@/types/Pokemon';
 import { Image, Text } from '../Common';
 import { css, styled } from 'styled-components';
+import Modal from '../Common/Dialog';
 
 type Props = {
   pokemons: PokemonType[];
@@ -28,20 +29,30 @@ const typeColor: any = {
 };
 
 const Pokemon: React.FC<Props> = ({ pokemons }: Props) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [getPokemon, setGetPokemon] = useState<PokemonType>();
   const keys = Object.keys(typeColor);
 
+  const handleOpen = (pokemon?: PokemonType) => {
+    setOpen(!open);
+    if (!pokemon) return;
+    setGetPokemon(pokemon);
+  };
+
   if (!pokemons[0]) {
-    return <>
-      <div className='grid grid-cols-12'>
-        <div className='col-start-2 col-span-4'>
-          <Typography>No result found!</Typography>
+    return (
+      <>
+        <div className="grid grid-cols-12">
+          <div className="col-start-2 col-span-4">
+            <Typography>No result found!</Typography>
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    );
   }
 
   return (
-    <div className="grid grid-cols-12 gap-[20px]">
+    <div className="grid grid-cols-12 md:gap-[20px] maxSm:flex maxSm:flex-wrap maxSm:justify-center maxSm:gap-[20px]">
       {pokemons?.map((pokemon, key) => {
         let colStart;
         if (key === 0) {
@@ -57,8 +68,8 @@ const Pokemon: React.FC<Props> = ({ pokemons }: Props) => {
         const getVal: any = keys.find(val => val === pokemon?.types![0].toLowerCase());
 
         return (
-          <div key={key} className={`${colStart} col-span-2`}>
-            <CardStyled typecolor={typeColor[getVal]}>
+          <div key={key} className={`${colStart} md:col-span-2`}>
+            <CardStyled typecolor={typeColor[getVal]} onClick={() => handleOpen(pokemon)}>
               <div className="w-full h-[300px]">
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="bg-white absolute top-[5px] right-[15px] px-[5px] py-[2px] rounded-[10px] text-[12px]">
@@ -80,10 +91,16 @@ const Pokemon: React.FC<Props> = ({ pokemons }: Props) => {
                       <p className="text-[12px] font-[600]">Max CP</p>
                       <p className="text-[12px]">{pokemon?.maxCP}</p>
                     </div>
-                    <div className="flex flex-col justify-center items-center w-[90px]">
-                      <p className="text-[12px] font-[600]">classification</p>
-                      <p className="text-[12px] text-center">{pokemon?.classification}</p>
-                    </div>
+                    {pokemon?.evolutions && (
+                      <div className="flex flex-col justify-center items-center w-[90px] ">
+                        <p className="text-[12px] font-[600] ">Evolutions</p>
+                        {pokemon?.evolutions?.map((ev: { name: string }, i: number) => (
+                          <p key={i} className="text-[12px] text-center">
+                            {ev.name}
+                          </p>
+                        ))}
+                      </div>
+                    )}
                     <div className="flex flex-col justify-center items-center w-[60px]">
                       <p className="text-[12px] font-[600]">Fleet rate</p>
                       <p className="text-[12px]">{pokemon?.fleeRate}</p>
@@ -95,6 +112,7 @@ const Pokemon: React.FC<Props> = ({ pokemons }: Props) => {
           </div>
         );
       })}
+      <Modal open={open} handleOpen={handleOpen} pokemonData={getPokemon} />
     </div>
   );
 };
@@ -102,6 +120,7 @@ const Pokemon: React.FC<Props> = ({ pokemons }: Props) => {
 export default Pokemon;
 
 const CardStyled = styled(Card)<{ typecolor: string }>`
+  cursor: pointer;
   background: ${props =>
     props.typecolor &&
     css`

@@ -24,8 +24,6 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
     query: GET_POKEMONS,
   });
 
-  console.log('error => ', error);
-
   // check server side render
   const isServer = !!context.req;
 
@@ -60,7 +58,7 @@ const Pokemons: NextPage<Props> = (props: Props) => {
 
   }, [searchData, inputVal]);
 
-  console.log('searchData => ', searchData)
+  console.log(props.pokemons)
 
   if (props.loading) {
     return (
@@ -80,8 +78,8 @@ const Pokemons: NextPage<Props> = (props: Props) => {
     <>
       <div className="space-y-[20px] py-[30px]">
         <div className="grid grid-cols-12">
-          <div className="col-start-2 col-span-4">
-            <div className="flex items-end justify-start gap-x-[10px]">
+          <div className="md:col-start-2 md:col-span-4 col-span-12">
+            <div className="flex items-end justify-start gap-x-[10px] maxSm:px-[16px]">
               <div>
                 <InputText
                   value={inputVal}
