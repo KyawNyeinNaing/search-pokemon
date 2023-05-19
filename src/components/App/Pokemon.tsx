@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Typography } from '@material-tailwind/react';
 import { PokemonType } from '@/types/Pokemon';
-import { Image, Text } from '../Common';
+import { Image } from '../Common';
 import { css, styled } from 'styled-components';
 import Modal from '../Common/Dialog';
 
