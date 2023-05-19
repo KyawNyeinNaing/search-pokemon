@@ -35,7 +35,7 @@ const Modal = (props: Props) => {
             <div color="gray" className="font-semibold opacity-70">
               Evolutions
             </div>
-            <div>
+            <div className='space-y-[20px]'>
               {props?.pokemonData?.evolutions.map((ev: PokemonType, key: number) => (
                 <div key={key}>
                   <div className="flex items-start justify-start gap-[20px]">
